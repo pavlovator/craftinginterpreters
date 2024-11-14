@@ -1,6 +1,7 @@
 package com.craftinginterpreters.lox;
 
 class Token {
+    // meaning of final is that once they are set by constructor they cant be modified...
     final TokenType type;
     final String lexeme;
     final Object literal;
