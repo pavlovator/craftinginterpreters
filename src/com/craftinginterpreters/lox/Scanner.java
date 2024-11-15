@@ -46,14 +46,21 @@ class Scanner {
             start = current;
             scanToken();
         }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         tokens.add(new Token(EOF, "", null, line));
         return tokens;
     }
 
+<<<<<<< Updated upstream
     private boolean isAtEnd() {
         return current >= source.length();
     }
 
+=======
+>>>>>>> Stashed changes
     private void scanToken() {
         char c = advance();
         switch (c) {
@@ -67,6 +74,7 @@ class Scanner {
             case '+': addToken(PLUS); break;
             case ';': addToken(SEMICOLON); break;
             case '*': addToken(STAR); break;
+<<<<<<< Updated upstream
             case '!':
                 addToken(match('=') ? BANG_EQUAL : BANG);
                 break;
@@ -79,6 +87,12 @@ class Scanner {
             case '>':
                 addToken(match('=') ? GREATER_EQUAL : GREATER);
                 break;
+=======
+            case '!': addToken(match('=') ? BANG_EQUAL : BANG); break;
+            case '=': addToken(match('=') ? EQUAL_EQUAL : EQUAL); break;
+            case '<': addToken(match('=') ? LESS_EQUAL : LESS); break;
+            case '>': addToken(match('=') ? GREATER_EQUAL : GREATER); break;
+>>>>>>> Stashed changes
             case '/':
                 if (match('/')) {
                     // A comment goes until the end of the line.
@@ -87,15 +101,29 @@ class Scanner {
                     addToken(SLASH);
                 }
                 break;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
             case ' ':
             case '\r':
             case '\t':
                 // Ignore whitespace.
                 break;
+<<<<<<< Updated upstream
             case '\n':
                 line++;
                 break;
             case '"': string(); break;
+=======
+
+            case '\n':
+                line++;
+                break;
+
+            case '"': string(); break;
+
+>>>>>>> Stashed changes
             default:
                 if (isDigit(c)) {
                     number();
@@ -108,6 +136,7 @@ class Scanner {
         }
     }
 
+<<<<<<< Updated upstream
     private char advance() {
         return source.charAt(current++);
     }
@@ -132,6 +161,31 @@ class Scanner {
     private char peek() {
         if (isAtEnd()) return '\0';
         return source.charAt(current);
+=======
+    private void identifier() {
+        while (isAlphaNumeric(peek())) advance();
+
+        // See if the identifier is a reserved word.
+        String text = source.substring(start, current);
+
+        TokenType type = keywords.get(text);
+        if (type == null) type = IDENTIFIER;
+        addToken(type);
+    }
+
+    private void number() {
+        while (isDigit(peek())) advance();
+
+        // Look for a fractional part.
+        if (peek() == '.' && isDigit(peekNext())) {
+            // Consume the "."
+            advance();
+
+            while (isDigit(peek())) advance();
+        }
+
+        addToken(NUMBER, Double.parseDouble(source.substring(start, current)));
+>>>>>>> Stashed changes
     }
 
     private void string() {
@@ -140,6 +194,10 @@ class Scanner {
             advance();
         }
 
+<<<<<<< Updated upstream
+=======
+        // Unterminated string.
+>>>>>>> Stashed changes
         if (isAtEnd()) {
             Lox.error(line, "Unterminated string.");
             return;
@@ -153,6 +211,7 @@ class Scanner {
         addToken(STRING, value);
     }
 
+<<<<<<< Updated upstream
     private boolean isDigit(char c) {
         return c >= '0' && c <= '9';
     }
@@ -170,6 +229,19 @@ class Scanner {
 
         addToken(NUMBER,
                 Double.parseDouble(source.substring(start, current)));
+=======
+    private boolean match(char expected) {
+        if (isAtEnd()) return false;
+        if (source.charAt(current) != expected) return false;
+
+        current++;
+        return true;
+    }
+
+    private char peek() {
+        if (isAtEnd()) return '\0';
+        return source.charAt(current);
+>>>>>>> Stashed changes
     }
 
     private char peekNext() {
@@ -187,6 +259,7 @@ class Scanner {
         return isAlpha(c) || isDigit(c);
     }
 
+<<<<<<< Updated upstream
     private void identifier() {
         while (isAlphaNumeric(peek())) advance();
 
@@ -196,3 +269,27 @@ class Scanner {
         addToken(type);
     }
 }
+=======
+    private boolean isDigit(char c) {
+        return c >= '0' && c <= '9';
+    }
+
+    private boolean isAtEnd() {
+        return current >= source.length();
+    }
+
+    private char advance() {
+        current++;
+        return source.charAt(current - 1);
+    }
+
+    private void addToken(TokenType type) {
+        addToken(type, null);
+    }
+
+    private void addToken(TokenType type, Object literal) {
+        String text = source.substring(start, current);
+        tokens.add(new Token(type, text, literal, line));
+    }
+}
+>>>>>>> Stashed changes

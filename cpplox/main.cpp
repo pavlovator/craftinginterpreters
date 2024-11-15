@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include "Scanner.hpp"
 
 void run_file() {
     
@@ -11,6 +11,7 @@ void run_repl() {
     while (true) {
         std::cout << "cpplux>";
         std::cin >> command;
+        Scanner scanner = Scanner();
         std::cout << command << std::endl;
     }
 }
