@@ -11,8 +11,7 @@ void run_repl() {
     while (true) {
         std::cout << "cpplux>";
         std::cin >> command;
-        Scanner scanner = Scanner();
-        std::cout << command << std::endl;
+        Scanner scanner = Scanner(command);
     }
 }
 

@@ -15,4 +15,4 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include_directories(include)
 
 # Add the executable and specify the source files
-add_executable(cpplox main.cpp src/Scanner.cpp)
+add_executable(cpplox main.cpp src/Scanner.cpp src/Token.cpp)
